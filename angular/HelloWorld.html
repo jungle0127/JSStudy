@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<meta charset="UTF-8">
+<title>Angular Hello World</title>
+<script type="text/javascript"
+	src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/HelloAngular.js"></script>
+</head>
+<body>
+	<div ng-controller="HelloAngular">
+		<p>{{greeting.text}},Angular</p>
+	</div>
+	<br />
+	<div>
+		<input type="text" ng-model="username" placeholder="请输入用户名" /><br>
+		{{username}}
+	</div>
+	<input type="button" value="test" onclick="showMsg()"/>
+</body>
+</html>

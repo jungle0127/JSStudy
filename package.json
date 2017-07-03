@@ -1,0 +1,22 @@
+{
+  "name": "jsstudy",
+  "version": "1.0.0",
+  "description": "nodejs development environment for eclipse: blog.csdn.net/enson16855/article/details/22955863",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jungle0127/JSStudy.git"
+  },
+  "author": "ps.zhang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jungle0127/JSStudy/issues"
+  },
+  "homepage": "https://github.com/jungle0127/JSStudy#readme",
+  "dependencies": {
+    "angular": "^1.6.4"
+  }
+}
