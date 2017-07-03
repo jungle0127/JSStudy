@@ -1,9 +1,9 @@
 /**
  * http://usejsdoc.org/
  */
-function HelloAngular($scope){
-	$scope.greeting = {text:'Hello'};
-}
-function showMsg(){
-	alert("OK");
-}
+
+var app = angular.module('demo',[]);
+app.controller('HelloWorld',function($scope){
+	$scope.greeting={text:'Hello'};
+});
+
