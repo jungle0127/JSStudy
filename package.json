@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jungle0127/JSStudy#readme",
   "dependencies": {
-    "angular": "^1.6.4"
+    "angular": "^1.6.4",
+    "bootstrap": "^3.3.7"
   }
 }
