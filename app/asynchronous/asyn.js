@@ -12,6 +12,8 @@
  * http://blog.csdn.net/vivianhope/article/details/52837132
  * http://www.jianshu.com/p/6d513be09d8c
  * http://www.cnblogs.com/haogj/p/4480772.html
+ * 
+ * Promises/A:
  * http://wiki.commonjs.org/wiki/Promises/A
  * 
  * promises/A+:
