@@ -6,6 +6,9 @@
  * http://blog.codingplayboy.com/2017/04/25/js_async/ 
  * http://www.uu3aa.com/a/87184
  * 
+ * Javascript promise demo:
+ * https://mdn.github.io/js-examples/promises-test/
+ * 
  * nodejs for promise: 
  * https://cnodejs.org/topic/560dbc826a1ed28204a1e7de
  * https://my.oschina.net/sundq/blog/227410
@@ -19,7 +22,7 @@
  * promises/A+:
  * https://promisesaplus.com/
  */
-var jquery = require('../../node_modules/jquery/dist/jquery.min.js');
+var $ = require('jquery');
 console.log('a');
 setTimeout(function() {
 	console.log('c');
@@ -33,3 +36,7 @@ setTimeout(function(){
 console.log('b');
 
 console.error('adb');
+console.dir(Promise);
+$.promise();
+//var defer = $.Deferred();
+//console.log(defer);
