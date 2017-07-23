@@ -16,3 +16,4 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript
 
 official document for NPM:
 https://docs.npmjs.com/getting-started/using-a-package.json
+https://docs.npmjs.com/cli/install
