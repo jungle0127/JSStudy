@@ -13,3 +13,6 @@ http://es6.ruanyifeng.com/#README
 
 ES:
 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript
+
+official document for NPM:
+https://docs.npmjs.com/getting-started/using-a-package.json
