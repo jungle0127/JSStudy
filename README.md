@@ -9,6 +9,7 @@ bootstrap: http://www.runoob.com/bootstrap/bootstrap-tutorial.html
 ECMAScript 6 compatible table:
 http://kangax.github.io/compat-table/es6/
 ES6 Book:
+http://exploringjs.com/es6/index.html#toc_ch_modules **
 http://es6.ruanyifeng.com/#README
 
 ES:
