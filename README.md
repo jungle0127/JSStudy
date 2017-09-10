@@ -21,3 +21,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript/ECMASc
 official document for NPM:
 https://docs.npmjs.com/getting-started/using-a-package.json
 https://docs.npmjs.com/cli/install
+
+Angular:
+http://www.cnblogs.com/longhx/p/6960288.html
+
+Robot:
+http://m.blog.csdn.net/anni001mi/article/details/70153738
