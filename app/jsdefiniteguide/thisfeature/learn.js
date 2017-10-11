@@ -14,3 +14,23 @@ console.log(lh);
 
 //https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Functions
 //https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes
+
+function Person() {
+	var self = this;
+	  // The Person() constructor defines `this` as itself.
+	  self.age = 0;
+
+	  setInterval(function growUp() {
+	    // In nonstrict mode, the growUp() function defines `this` 
+	    // as the global object, which is different from the `this`
+	    // defined by the Person() constructor.
+	    self.age++;
+	  }, 1000);	  
+	 
+	  this.toString = function(){
+		  console.log(self.age);
+	  }
+}
+
+var p = new Person();
+p.toString();

@@ -27,10 +27,34 @@ var person = {
 var myObject = {
     firstName:"Mary",
     lastName: "Doe",
+    fullName: person.fullName
 }
 var str = person.fullName.call(myObject);  // Will return "Mary Doe" 
+//console.log(str);
+//str = person.fullName();
+//console.log(str);
+str = myObject.fullName();
 console.log(str);
 
 var a = ['a'];
 var b = ['b'];
 console.log(a.concat(b));
+
+function* idMaker(){
+	let index = 0;
+	while(index < 3){
+		yield index++;
+	}
+}
+
+var gen = idMaker();
+var item = gen.next();
+while(!item.done){
+	console.log(item.value);
+	item = gen.next(5);
+}
+
+var ar = ['a','b'];
+for(let item of ar){
+	console.log(item);
+}
