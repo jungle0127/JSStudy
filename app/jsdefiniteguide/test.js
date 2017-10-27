@@ -51,3 +51,4 @@ console.log(process_WhiteList('nbapp258.engba.veritas.com (AMS)'));
 //console.log('nbapp258.engba.veritas.com (AMS)'.replace(/AMS/g,''));
 
 console.log('Jinghe'<'Jotus');
+console.error(Math.ceil(0.5));
