@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width"><title>https://sandbox.runjs.cn/show/2nngvn8w</title><link rel="stylesheet" type="text/css" href="resource://content-accessible/viewsource.css"></head><body id="viewsource" class="highlight" style="-moz-tab-size: 4" contextmenu="actions"><pre id="line1"><span>	</span><span class="doctype">&lt;!DOCTYPE html&gt;</span><span>
+<span id="line2"></span></span><span>&lt;<span class="start-tag">html</span> <span class="attribute-name">xmlns</span>="<a class="attribute-value">http://www.w3.org/1999/xhtml</a>"&gt;</span><span>
+<span id="line3"></span></span><span>&lt;<span class="start-tag">head</span>&gt;</span><span>
+<span id="line4"></span>    </span><span>&lt;<span class="start-tag">meta</span> <span class="attribute-name">http-equiv</span>="<a class="attribute-value">Content-Type</a>" <span class="attribute-name">content</span>="<a class="attribute-value">text/html; charset=utf-8</a>" <span>/</span>&gt;</span><span>
+<span id="line5"></span>    </span><span>&lt;<span class="start-tag">title</span>&gt;</span><span>在线生成红黑树（含变形步骤）</span><span>&lt;/<span class="end-tag">title</span>&gt;</span><span>
+<span id="line6"></span>
+<span id="line7"></span></span><span>&lt;/<span class="end-tag">head</span>&gt;</span><span>
+<span id="line8"></span></span><span>&lt;<span class="start-tag">body</span>&gt;</span><span>
+<span id="line9"></span>    </span><span>&lt;<span class="start-tag">div</span>&gt;</span><span>
+<span id="line10"></span>        </span><span>&lt;<span class="start-tag">ul</span>&gt;</span><span>
+<span id="line11"></span>            </span><span>&lt;<span class="start-tag">li</span>&gt;</span><span>增加节点</span><span>&lt;/<span class="end-tag">li</span>&gt;</span><span>
+<span id="line12"></span>            </span><span>&lt;<span class="start-tag">li</span>&gt;</span><span>方式一：</span><span>&lt;<span class="start-tag">input</span> <span class="attribute-name">type</span>="<a class="attribute-value">button</a>" <span class="attribute-name">value</span>="<a class="attribute-value">随机增加一个节点</a>" <span class="attribute-name">title</span>="<a class="attribute-value">随机增加一个节点</a>" <span class="attribute-name">onclick</span>="<a class="attribute-value">AddRandom()</a>" <span>/</span>&gt;</span><span></span><span>&lt;/<span class="end-tag">li</span>&gt;</span><span>
+<span id="line13"></span>            </span><span>&lt;<span class="start-tag">li</span>&gt;</span><span>方式二：</span><span>&lt;<span class="start-tag">input</span> <span class="attribute-name">id</span>="<a class="attribute-value">numbertext</a>" <span class="attribute-name">title</span>="<a class="attribute-value"></a>" <span class="attribute-name">placeholder</span>="<a class="attribute-value">请用,(单字节)分割数字,0-999之间的数字</a>" <span class="attribute-name">value</span>="<a class="attribute-value"></a>" <span>/</span>&gt;</span><span></span><span>&lt;<span class="start-tag">input</span> <span class="attribute-name">type</span>="<a class="attribute-value">button</a>" <span class="attribute-name">value</span>="<a class="attribute-value">一个一个节点增加</a>" <span class="attribute-name">title</span>="<a class="attribute-value">增加一个节点</a>" <span class="attribute-name">onclick</span>="<a class="attribute-value">AddOneNumber()</a>" <span>/</span>&gt;</span><span></span><span>&lt;/<span class="end-tag">li</span>&gt;</span><span>
+<span id="line14"></span>            </span><span>&lt;<span class="start-tag">li</span>&gt;</span><span></span><span>&lt;/<span class="end-tag">li</span>&gt;</span><span>
+<span id="line15"></span>            </span><span>&lt;<span class="start-tag">li</span>&gt;</span><span>删除节点</span><span>&lt;/<span class="end-tag">li</span>&gt;</span><span>
+<span id="line16"></span>            </span><span>&lt;<span class="start-tag">li</span>&gt;</span><span></span><span>&lt;<span class="start-tag">input</span> <span class="attribute-name">id</span>="<a class="attribute-value">deleteNumberText</a>" <span class="attribute-name">type</span>="<a class="attribute-value">text</a>" <span class="attribute-name">placeholder</span>="<a class="attribute-value">请输入需要删除的节点</a>" <span>/</span>&gt;</span><span></span><span>&lt;<span class="start-tag">input</span> <span class="attribute-name">type</span>="<a class="attribute-value">button</a>" <span class="attribute-name">value</span>="<a class="attribute-value">删除</a>" <span class="attribute-name">onclick</span>="<a class="attribute-value">DeleteNumber()</a>" <span>/</span>&gt;</span><span> </span><span>&lt;/<span class="end-tag">li</span>&gt;</span><span>
+<span id="line17"></span>            </span><span>&lt;<span class="start-tag">li</span>&gt;</span><span></span><span>&lt;/<span class="end-tag">li</span>&gt;</span><span>
+<span id="line18"></span>            </span><span>&lt;<span class="start-tag">li</span>&gt;</span><span>参考：  http://www.cnblogs.com/skywang12345/p/3603935.html </span><span>&lt;/<span class="end-tag">li</span>&gt;</span><span>
+<span id="line19"></span>        </span><span>&lt;/<span class="end-tag">ul</span>&gt;</span><span>
+<span id="line20"></span>    </span><span>&lt;/<span class="end-tag">div</span>&gt;</span><span>
+<span id="line21"></span>    </span><span>&lt;<span class="start-tag">form</span>&gt;</span><span>
+<span id="line22"></span>        </span><span>&lt;<span class="start-tag">fieldset</span>&gt;</span><span>
+<span id="line23"></span>            </span><span>&lt;<span class="start-tag">legend</span>&gt;</span><span>红黑树</span><span>&lt;/<span class="end-tag">legend</span>&gt;</span><span>
+<span id="line24"></span>            </span><span>&lt;<span class="start-tag">div</span> <span class="attribute-name">id</span>="<a class="attribute-value">currentView</a>"&gt;</span><span></span><span>&lt;/<span class="end-tag">div</span>&gt;</span><span>
+<span id="line25"></span>        </span><span>&lt;/<span class="end-tag">fieldset</span>&gt;</span><span>
+<span id="line26"></span>    </span><span>&lt;/<span class="end-tag">form</span>&gt;</span><span>
+<span id="line27"></span>    </span><span>&lt;<span class="start-tag">form</span> <span class="attribute-name">id</span>="<a class="attribute-value">stepView</a>"&gt;</span><span></span><span>&lt;/<span class="end-tag">form</span>&gt;</span><span>
+<span id="line28"></span>
+<span id="line29"></span>    </span><span>&lt;<span class="start-tag">script</span>&gt;</span><span>
+<span id="line30"></span>        var NodeColor = { Black: "black", Red: "red" };
+<span id="line31"></span>
+<span id="line32"></span>        var RBNode = function (_date, _paret, _color) {
+<span id="line33"></span>            this.Data = _date;
+<span id="line34"></span>            this.Parent = _paret;
+<span id="line35"></span>            this.Color = _color;
+<span id="line36"></span>            this.LeftNode = null;
+<span id="line37"></span>            this.RightNode = null;
+<span id="line38"></span>        }
+<span id="line39"></span>
+<span id="line40"></span>        var RedBlackBinaryTree = function () {
+<span id="line41"></span>            this.RootNode = null;//根节点
+<span id="line42"></span>
+<span id="line43"></span>            this.Insert = function (insertValue) {
+<span id="line44"></span>                if (this.RootNode == null) {
+<span id="line45"></span>                    this.RootNode = new RBNode(insertValue, null, NodeColor.Black);
+<span id="line46"></span>                } else {
+<span id="line47"></span>                    var newNode = insert.call(this, insertValue);
+<span id="line48"></span>                    insertFixUp.call(this, newNode);
+<span id="line49"></span>                }
+<span id="line50"></span>            }
+<span id="line51"></span>
+<span id="line52"></span>            function insert(key) {
+<span id="line53"></span>                ClearStepView();//清空分解步骤
+<span id="line54"></span>                var node = this.RootNode;
+<span id="line55"></span>
+<span id="line56"></span>                var newNode = new RBNode(key, null, NodeColor.Red);
+<span id="line57"></span>                while (true) {
+<span id="line58"></span>                    if (key &gt; node.Data) {
+<span id="line59"></span>                        if (node.RightNode == null) {
+<span id="line60"></span>                            newNode.Parent = node;
+<span id="line61"></span>                            node.RightNode = newNode;
+<span id="line62"></span>                            break;
+<span id="line63"></span>                        }
+<span id="line64"></span>                        node = node.RightNode;
+<span id="line65"></span>                    } else if (key </span><span>&lt; </span><span>node.Data) {
+<span id="line66"></span>                        if (node.LeftNode == null) {
+<span id="line67"></span>                            newNode.Parent = node;
+<span id="line68"></span>                            node.LeftNode = newNode;
+<span id="line69"></span>                            break;
+<span id="line70"></span>                        }
+<span id="line71"></span>                        node = node.LeftNode;
+<span id="line72"></span>                    } else {
+<span id="line73"></span>                        break;
+<span id="line74"></span>                    }
+<span id="line75"></span>                }
+<span id="line76"></span>                return newNode;
+<span id="line77"></span>            }
+<span id="line78"></span>
+<span id="line79"></span>            function insertFixUp(node) {
+<span id="line80"></span>                var parentNode = node.Parent;
+<span id="line81"></span>                if (parentNode != null &amp;&amp; NodeColor.Red == parentNode.Color) {
+<span id="line82"></span>                    var gprentNode = parentNode.Parent;
+<span id="line83"></span>                    if (parentNode == gprentNode.LeftNode) {
+<span id="line84"></span>                        var uncleNode = gprentNode.RightNode;
+<span id="line85"></span>                        if (uncleNode != null &amp;&amp; NodeColor.Red == uncleNode.Color) {
+<span id="line86"></span>                            CreateStepView(this.RootNode, "insertCase1", node.Data);//记录分解步骤
+<span id="line87"></span>                            parentNode.Color = NodeColor.Black;
+<span id="line88"></span>                            uncleNode.Color = NodeColor.Black;
+<span id="line89"></span>                            gprentNode.Color = NodeColor.Red;
+<span id="line90"></span>                            CreateStepView(this.RootNode, "insertSolution1");//记录分解步骤
+<span id="line91"></span>                            insertFixUp.call(this, gprentNode);
+<span id="line92"></span>                        } else {
+<span id="line93"></span>                            if (parentNode.RightNode == node) {
+<span id="line94"></span>                                CreateStepView(this.RootNode, "insertCase2", node.Data);//记录分解步骤
+<span id="line95"></span>                                leftRotation.call(this, parentNode);
+<span id="line96"></span>                                CreateStepView(this.RootNode, "insertSolution2");//记录分解步骤
+<span id="line97"></span>                                insertFixUp.call(this, parentNode);
+<span id="line98"></span>                            } else if (parentNode.LeftNode == node) {
+<span id="line99"></span>                                CreateStepView(this.RootNode, "insertCase3", node.Data);//记录分解步骤
+<span id="line100"></span>                                parentNode.Color = NodeColor.Black;
+<span id="line101"></span>                                gprentNode.Color = NodeColor.Red;
+<span id="line102"></span>                                rightRotation.call(this, gprentNode);
+<span id="line103"></span>                                CreateStepView(this.RootNode, "insertSolution3");//记录分解步骤
+<span id="line104"></span>                            }
+<span id="line105"></span>                        }
+<span id="line106"></span>                    } else {
+<span id="line107"></span>                        var uncleNode = gprentNode.LeftNode;
+<span id="line108"></span>                        if (uncleNode != null &amp;&amp; NodeColor.Red == uncleNode.Color) {
+<span id="line109"></span>                            CreateStepView(this.RootNode, "insertCase1", node.Data);//记录分解步骤
+<span id="line110"></span>                            parentNode.Color = NodeColor.Black;
+<span id="line111"></span>                            uncleNode.Color = NodeColor.Black;
+<span id="line112"></span>                            gprentNode.Color = NodeColor.Red;
+<span id="line113"></span>                            CreateStepView(this.RootNode, "insertSolution1");//记录分解步骤
+<span id="line114"></span>                            insertFixUp.call(this, gprentNode);
+<span id="line115"></span>                        } else {
+<span id="line116"></span>                            if (parentNode.LeftNode == node) {
+<span id="line117"></span>                                CreateStepView(this.RootNode, "insertCase4", node.Data);//记录分解步骤
+<span id="line118"></span>                                rightRotation.call(this, parentNode);
+<span id="line119"></span>                                CreateStepView(this.RootNode, "insertSolution4");//记录分解步骤
+<span id="line120"></span>                                insertFixUp.call(this, parentNode);
+<span id="line121"></span>                            } else if (parentNode.RightNode == node) {
+<span id="line122"></span>                                CreateStepView(this.RootNode, "insertCase5", node.Data);//记录分解步骤
+<span id="line123"></span>                                parentNode.Color = NodeColor.Black;
+<span id="line124"></span>                                gprentNode.Color = NodeColor.Red;
+<span id="line125"></span>                                leftRotation.call(this, gprentNode);
+<span id="line126"></span>                                CreateStepView(this.RootNode, "insertSolution5");//记录分解步骤
+<span id="line127"></span>                            }
+<span id="line128"></span>                        }
+<span id="line129"></span>                    }
+<span id="line130"></span>                }
+<span id="line131"></span>                this.RootNode.Color = NodeColor.Black;
+<span id="line132"></span>            }
+<span id="line133"></span>
+<span id="line134"></span>            function leftRotation(node) {
+<span id="line135"></span>                var temp = node.RightNode;
+<span id="line136"></span>
+<span id="line137"></span>                node.RightNode = temp.LeftNode;
+<span id="line138"></span>                if (temp.LeftNode != null) {
+<span id="line139"></span>                    temp.LeftNode.Parent = node;
+<span id="line140"></span>                }
+<span id="line141"></span>
+<span id="line142"></span>                temp.Parent = node.Parent;
+<span id="line143"></span>
+<span id="line144"></span>                if (node.Parent == null) {
+<span id="line145"></span>                    this.RootNode = temp;
+<span id="line146"></span>                }
+<span id="line147"></span>                else {
+<span id="line148"></span>                    if (node.Parent.LeftNode == node) {
+<span id="line149"></span>                        node.Parent.LeftNode = temp;
+<span id="line150"></span>                    } else {
+<span id="line151"></span>                        node.Parent.RightNode = temp;
+<span id="line152"></span>                    }
+<span id="line153"></span>                }
+<span id="line154"></span>                temp.LeftNode = node;
+<span id="line155"></span>                node.Parent = temp;
+<span id="line156"></span>            }
+<span id="line157"></span>
+<span id="line158"></span>            function rightRotation(node) {
+<span id="line159"></span>                var temp = node.LeftNode;
+<span id="line160"></span>
+<span id="line161"></span>                node.LeftNode = temp.RightNode;
+<span id="line162"></span>                if (temp.RightNode != null) {
+<span id="line163"></span>                    temp.RightNode.Parent = node;
+<span id="line164"></span>                }
+<span id="line165"></span>
+<span id="line166"></span>                temp.Parent = node.Parent;
+<span id="line167"></span>
+<span id="line168"></span>                if (node.Parent == null) {
+<span id="line169"></span>                    this.RootNode = temp;
+<span id="line170"></span>                } else {
+<span id="line171"></span>                    if (node == node.Parent.RightNode) {
+<span id="line172"></span>                        node.Parent.RightNode = temp;
+<span id="line173"></span>                    } else {
+<span id="line174"></span>                        node.Parent.LeftNode = temp;
+<span id="line175"></span>                    }
+<span id="line176"></span>                }
+<span id="line177"></span>                temp.RightNode = node;
+<span id="line178"></span>                node.Parent = temp;
+<span id="line179"></span>            }
+<span id="line180"></span>
+<span id="line181"></span>            this.Remove = function (key) {
+<span id="line182"></span>                var node = search.call(this, this.RootNode, key);
+<span id="line183"></span>                if (node == null) {
+<span id="line184"></span>                    return;
+<span id="line185"></span>                } else {
+<span id="line186"></span>                    remove.call(this, node);
+<span id="line187"></span>                }
+<span id="line188"></span>            }
+<span id="line189"></span>
+<span id="line190"></span>            function remove(node) {
+<span id="line191"></span>                ClearStepView();//清空分解步骤
+<span id="line192"></span>                
+<span id="line193"></span>                var child, parent, nodeColor;
+<span id="line194"></span>                if (node.LeftNode != null &amp;&amp; node.RightNode != null) {
+<span id="line195"></span>                    CreateStepView(this.RootNode, "deleteCase8", node.Data);//记录分解步骤
+<span id="line196"></span>                    var tempNode = findMin(node.RightNode);
+<span id="line197"></span>                    if (node.Parent == null) {
+<span id="line198"></span>                        this.RootNode = tempNode;
+<span id="line199"></span>                    } else {
+<span id="line200"></span>                        if (node.Parent.LeftNode == node) {
+<span id="line201"></span>                            node.Parent.LeftNode = tempNode;
+<span id="line202"></span>                        } else {
+<span id="line203"></span>                            node.Parent.RightNode = tempNode;
+<span id="line204"></span>                        }
+<span id="line205"></span>                    }
+<span id="line206"></span>
+<span id="line207"></span>                    child = tempNode.RightNode;
+<span id="line208"></span>                    parent = tempNode.Parent;
+<span id="line209"></span>                    nodeColor = tempNode.Color;
+<span id="line210"></span>
+<span id="line211"></span>                    if (parent.Data == node.Data) {
+<span id="line212"></span>                        parent = tempNode;
+<span id="line213"></span>                    } else {
+<span id="line214"></span>                        if (child != null) {
+<span id="line215"></span>                            child.Parent = parent;
+<span id="line216"></span>                        }
+<span id="line217"></span>                        parent.LeftNode = child;
+<span id="line218"></span>
+<span id="line219"></span>                        tempNode.RightNode = node.RightNode;
+<span id="line220"></span>                        node.RightNode.Parent = tempNode;
+<span id="line221"></span>                    }
+<span id="line222"></span>
+<span id="line223"></span>                    tempNode.Parent = node.Parent;
+<span id="line224"></span>                    tempNode.Color = node.Color;
+<span id="line225"></span>                    tempNode.LeftNode = node.LeftNode
+<span id="line226"></span>                    node.LeftNode.Parent = tempNode;
+<span id="line227"></span>                    
+<span id="line228"></span>                    CreateStepView(this.RootNode, "deleteSolution8");//记录分解步骤
+<span id="line229"></span>
+<span id="line230"></span>                    if (nodeColor == NodeColor.Black) {
+<span id="line231"></span>                        removeFixUp.call(this, child, parent);
+<span id="line232"></span>                    }
+<span id="line233"></span>                } else {
+<span id="line234"></span>                    CreateStepView(this.RootNode, "deleteCase9", node.Data);//记录分解步骤
+<span id="line235"></span>                    if (node.LeftNode != null) {
+<span id="line236"></span>                        child = node.LeftNode;
+<span id="line237"></span>                    } else {
+<span id="line238"></span>                        child = node.RightNode;
+<span id="line239"></span>                    }
+<span id="line240"></span>
+<span id="line241"></span>                    parent = node.Parent;
+<span id="line242"></span>                    nodeColor = node.Color;
+<span id="line243"></span>
+<span id="line244"></span>                    if (child != null) {
+<span id="line245"></span>                        child.Parent = parent;
+<span id="line246"></span>                    }
+<span id="line247"></span>
+<span id="line248"></span>                    if (parent != null) {
+<span id="line249"></span>                        if (parent.LeftNode != null &amp;&amp; parent.LeftNode.Data == node.Data) {
+<span id="line250"></span>                            parent.LeftNode = child;
+<span id="line251"></span>                        } else {
+<span id="line252"></span>                            parent.RightNode = child;
+<span id="line253"></span>                        }
+<span id="line254"></span>                    } else {
+<span id="line255"></span>                        this.RootNode = child;
+<span id="line256"></span>                    }
+<span id="line257"></span>
+<span id="line258"></span>                    CreateStepView(this.RootNode, "deleteSolution9");//记录分解步骤
+<span id="line259"></span>
+<span id="line260"></span>                    if (nodeColor == NodeColor.Black) {
+<span id="line261"></span>                        removeFixUp.call(this, child, parent)
+<span id="line262"></span>                    }
+<span id="line263"></span>                }
+<span id="line264"></span>                node = null;
+<span id="line265"></span>            }
+<span id="line266"></span>
+<span id="line267"></span>            function removeFixUp(node, parentNode) {
+<span id="line268"></span>                
+<span id="line269"></span>                var otherNode;
+<span id="line270"></span>                while ((node == null || node.Color == NodeColor.Black) &amp;&amp; (node != this.RootNode)) {
+<span id="line271"></span>                    if (parentNode.LeftNode == node) {
+<span id="line272"></span>                        otherNode = parentNode.RightNode;
+<span id="line273"></span>                        if (otherNode.Color == NodeColor.Red) {
+<span id="line274"></span>                            CreateStepView(this.RootNode, "deleteCase1");//记录分解步骤
+<span id="line275"></span>                            otherNode.Color = NodeColor.Black;
+<span id="line276"></span>                            parentNode.Color = NodeColor.Red;
+<span id="line277"></span>                            leftRotation.call(this, parentNode);
+<span id="line278"></span>                            otherNode = parentNode.RightNode;
+<span id="line279"></span>                            CreateStepView(this.RootNode, "deleteSolution1");//记录分解步骤
+<span id="line280"></span>                        }
+<span id="line281"></span>
+<span id="line282"></span>                        if ((otherNode.LeftNode == null || otherNode.LeftNode.Color == NodeColor.Black) &amp;&amp;
+<span id="line283"></span>                           (otherNode.RightNode == null || otherNode.RightNode.Color == NodeColor.Black)) {
+<span id="line284"></span>                            CreateStepView(this.RootNode, "deleteCase3");//记录分解步骤
+<span id="line285"></span>                            otherNode.Color = NodeColor.Red;
+<span id="line286"></span>                            node = parentNode;
+<span id="line287"></span>                            parentNode = node.Parent;
+<span id="line288"></span>                            CreateStepView(this.RootNode, "deleteSolution3");//记录分解步骤
+<span id="line289"></span>                        } else {
+<span id="line290"></span>                            if (otherNode.RightNode == null || otherNode.RightNode.Color == NodeColor.Black) {
+<span id="line291"></span>                                CreateStepView(this.RootNode, "deleteCase4");//记录分解步骤
+<span id="line292"></span>                                otherNode.LeftNode.Color == NodeColor.Black;
+<span id="line293"></span>                                otherNode.Color = NodeColor.Red;
+<span id="line294"></span>                                rightRotation.call(this, otherNode);
+<span id="line295"></span>                                otherNode = parentNode.RightNode;
+<span id="line296"></span>                                CreateStepView(this.RootNode, "deleteSolution4");//记录分解步骤
+<span id="line297"></span>                            }
+<span id="line298"></span>
+<span id="line299"></span>                            CreateStepView(this.RootNode, "deleteCase6");//记录分解步骤
+<span id="line300"></span>                            otherNode.Color = parentNode.Color;
+<span id="line301"></span>                            parentNode.Color = NodeColor.Black;
+<span id="line302"></span>                            otherNode.RightNode.Color = NodeColor.Black;
+<span id="line303"></span>                            leftRotation.call(this, parentNode);
+<span id="line304"></span>                            node = this.RootNode;
+<span id="line305"></span>                            CreateStepView(this.RootNode, "deleteSolution6");//记录分解步骤
+<span id="line306"></span>                            break;
+<span id="line307"></span>                        }
+<span id="line308"></span>                    } else {
+<span id="line309"></span>                        otherNode = parentNode.LeftNode;
+<span id="line310"></span>                        if (otherNode.Color == NodeColor.Red) {
+<span id="line311"></span>                            CreateStepView(this.RootNode, "deleteCase2");//记录分解步骤
+<span id="line312"></span>                            otherNode.Color = NodeColor.Black;
+<span id="line313"></span>                            parentNode.Color = NodeColor.Red;
+<span id="line314"></span>                            rightRotation.call(this, parentNode);
+<span id="line315"></span>                            otherNode = parentNode.LeftNode;
+<span id="line316"></span>                            CreateStepView(this.RootNode, "deleteSolution2");//记录分解步骤
+<span id="line317"></span>                        }
+<span id="line318"></span>
+<span id="line319"></span>                        if ((otherNode.LeftNode == null || otherNode.LeftNode.Color == NodeColor.Black) &amp;&amp;
+<span id="line320"></span>                            (otherNode.RightNode == null || otherNode.RightNode.Color == NodeColor.Black)) {
+<span id="line321"></span>                            CreateStepView(this.RootNode, "deleteCase3");//记录分解步骤
+<span id="line322"></span>                            otherNode.Color = NodeColor.Red;
+<span id="line323"></span>                            node = parentNode;
+<span id="line324"></span>                            parentNode = node.parent;
+<span id="line325"></span>                            CreateStepView(this.RootNode, "deleteSolution3");//记录分解步骤
+<span id="line326"></span>                        } else {
+<span id="line327"></span>                            if (otherNode.LeftNode == null || otherNode.LeftNode.Color == NodeColor.Black) {
+<span id="line328"></span>                                CreateStepView(this.RootNode, "deleteCase5");//记录分解步骤
+<span id="line329"></span>                                otherNode.RightNode.Color = NodeColor.Black;
+<span id="line330"></span>                                otherNode.Color = NodeColor.Red;
+<span id="line331"></span>                                leftRotation.call(this, otherNode);
+<span id="line332"></span>                                otherNode = parentNode.LeftNode;
+<span id="line333"></span>                                CreateStepView(this.RootNode, "deleteSolution5");//记录分解步骤
+<span id="line334"></span>                            }
+<span id="line335"></span>                            CreateStepView(this.RootNode, "deleteCase7");//记录分解步骤
+<span id="line336"></span>                            otherNode.Color = parentNode.Color;
+<span id="line337"></span>                            parentNode.Color = NodeColor.Black;
+<span id="line338"></span>                            otherNode.LeftNode.Color = NodeColor.Black;
+<span id="line339"></span>                            rightRotation.call(this, parentNode);
+<span id="line340"></span>                            node = this.RootNode;
+<span id="line341"></span>                            CreateStepView(this.RootNode, "deleteSolution7");//记录分解步骤
+<span id="line342"></span>                            break;
+<span id="line343"></span>                        }
+<span id="line344"></span>                    }
+<span id="line345"></span>                }
+<span id="line346"></span>                if (node != null) {
+<span id="line347"></span>                    node.Color = NodeColor.Black;
+<span id="line348"></span>                }
+<span id="line349"></span>            }
+<span id="line350"></span>
+<span id="line351"></span>            this.Search = function (key) {
+<span id="line352"></span>                return search.call(this, this.RootNode, key);
+<span id="line353"></span>            }
+<span id="line354"></span>
+<span id="line355"></span>            function search(node, key) {
+<span id="line356"></span>                if (node == null) {
+<span id="line357"></span>                    return null;
+<span id="line358"></span>                }
+<span id="line359"></span>
+<span id="line360"></span>                if (node.Data &gt; key) {
+<span id="line361"></span>                    return search(node.LeftNode, key);
+<span id="line362"></span>                } else if (node.Data </span><span>&lt; </span><span>key) {
+<span id="line363"></span>                    return search(node.RightNode, key);
+<span id="line364"></span>                } else {
+<span id="line365"></span>                    return node;
+<span id="line366"></span>                }
+<span id="line367"></span>            }
+<span id="line368"></span>
+<span id="line369"></span>            this.FindMin = function () {
+<span id="line370"></span>                return findMin(this.RootNode);
+<span id="line371"></span>            }
+<span id="line372"></span>
+<span id="line373"></span>            function findMin(node) {
+<span id="line374"></span>                if (node.LeftNode == null) {
+<span id="line375"></span>                    return node;
+<span id="line376"></span>                }
+<span id="line377"></span>                return findMin(node.LeftNode);
+<span id="line378"></span>            }
+<span id="line379"></span>
+<span id="line380"></span>            this.FindMax = function () {
+<span id="line381"></span>                return findMax(this.RootNode)
+<span id="line382"></span>            }
+<span id="line383"></span>
+<span id="line384"></span>            function findMax(node) {
+<span id="line385"></span>                if (node.RightNode == null) {
+<span id="line386"></span>                    return node;
+<span id="line387"></span>                }
+<span id="line388"></span>                return findMax(node.RightNode);
+<span id="line389"></span>            }
+<span id="line390"></span>
+<span id="line391"></span>
+<span id="line392"></span>            this.SearchRange = function (minKey, maxKey) {
+<span id="line393"></span>                return searchRange(minKey, maxKey, this.RootNode, []);
+<span id="line394"></span>            }
+<span id="line395"></span>
+<span id="line396"></span>            function searchRange(minKey, maxKey, node, nodeList) {
+<span id="line397"></span>                if (node == null) {
+<span id="line398"></span>                    return nodeList;
+<span id="line399"></span>                }
+<span id="line400"></span>
+<span id="line401"></span>                if (node.Data &gt; minKey) {
+<span id="line402"></span>                    searchRange(minKey, maxKey, node.LeftNode, nodeList);
+<span id="line403"></span>                }
+<span id="line404"></span>
+<span id="line405"></span>                if (node.Data &gt;= minKey &amp;&amp; node.Data </span><span>&lt; </span><span>maxKey) {
+<span id="line406"></span>                    nodeList.push(node.Data);
+<span id="line407"></span>                }
+<span id="line408"></span>
+<span id="line409"></span>                if (node.Data </span><span>&lt; </span><span>maxKey) {
+<span id="line410"></span>                    searchRange(minKey, maxKey, node.RightNode, nodeList);
+<span id="line411"></span>                }
+<span id="line412"></span>
+<span id="line413"></span>                return nodeList;
+<span id="line414"></span>            }
+<span id="line415"></span>
+<span id="line416"></span>            this.LevelOrder = function (action) {
+<span id="line417"></span>                levelOrder(this.RootNode, action);
+<span id="line418"></span>            }
+<span id="line419"></span>
+<span id="line420"></span>            function levelOrder(node, action) {
+<span id="line421"></span>                var stack = [];
+<span id="line422"></span>                stack.push(node);
+<span id="line423"></span>
+<span id="line424"></span>                while (stack.length &gt; 0) {
+<span id="line425"></span>                    var temp = stack.pop();
+<span id="line426"></span>
+<span id="line427"></span>                    action(temp);
+<span id="line428"></span>
+<span id="line429"></span>                    if (temp.LeftNode != null) {
+<span id="line430"></span>                        stack.push(temp.LeftNode);
+<span id="line431"></span>                    }
+<span id="line432"></span>
+<span id="line433"></span>                    if (temp.RightNode != null) {
+<span id="line434"></span>                        stack.push(temp.RightNode);
+<span id="line435"></span>                    }
+<span id="line436"></span>                }
+<span id="line437"></span>            }
+<span id="line438"></span>
+<span id="line439"></span>
+<span id="line440"></span>            this.PreOrder = function (action) {
+<span id="line441"></span>                treeOrder(this.RootNode, action, null, null);
+<span id="line442"></span>            }
+<span id="line443"></span>
+<span id="line444"></span>            this.InOrder = function (action) {
+<span id="line445"></span>                treeOrder(this.RootNode, null, action, null);
+<span id="line446"></span>            }
+<span id="line447"></span>
+<span id="line448"></span>            this.PostOrder = function (action) {
+<span id="line449"></span>                treeOrder(this.RootNode, null, null, action);
+<span id="line450"></span>            }
+<span id="line451"></span>
+<span id="line452"></span>            function treeOrder(node, preOrderAction, inOrderAction, postOrderAction) {
+<span id="line453"></span>                if (preOrderAction) {
+<span id="line454"></span>                    preOrderAction(node);
+<span id="line455"></span>                }
+<span id="line456"></span>
+<span id="line457"></span>                if (node.LeftNode != null) {
+<span id="line458"></span>                    treeOrder(node.LeftNode, preOrderAction, inOrderAction, postOrderAction);
+<span id="line459"></span>                }
+<span id="line460"></span>
+<span id="line461"></span>                if (inOrderAction) {
+<span id="line462"></span>                    inOrderAction(node);
+<span id="line463"></span>                }
+<span id="line464"></span>
+<span id="line465"></span>                if (node.RightNode != null) {
+<span id="line466"></span>                    treeOrder(node.RightNode, preOrderAction, inOrderAction, postOrderAction);
+<span id="line467"></span>                }
+<span id="line468"></span>
+<span id="line469"></span>                if (postOrderAction) {
+<span id="line470"></span>                    postOrderAction(node);
+<span id="line471"></span>                }
+<span id="line472"></span>            }
+<span id="line473"></span>        }
+<span id="line474"></span>    </span><span>&lt;/<span class="end-tag">script</span>&gt;</span><span>
+<span id="line475"></span>
+<span id="line476"></span>    </span><span>&lt;<span class="start-tag">script</span>&gt;</span><span>
+<span id="line477"></span>        var height = 50;//节点之间的高
+<span id="line478"></span>        var width = 15;//节点之间的宽
+<span id="line479"></span>        var tops = 40;//根节点离顶部的距离
+<span id="line480"></span>        var foot = 40;//树离底部距离
+<span id="line481"></span>        var spacing = 30;//树分别离两边的间距
+<span id="line482"></span>
+<span id="line483"></span>        var tree = new RedBlackBinaryTree();
+<span id="line484"></span>
+<span id="line485"></span>        function AddOneNumber() {
+<span id="line486"></span>            var numbertext = document.getElementById("numbertext").value;
+<span id="line487"></span>
+<span id="line488"></span>            var oneNums = numbertext.match(/[1-9][0-9]{0,2}\,?/);
+<span id="line489"></span>            document.getElementById("numbertext").value = numbertext.replace(/[1-9][0-9]{0,2}\,?/, "");
+<span id="line490"></span>
+<span id="line491"></span>            var num = (oneNums + "").match(/[1-9][0-9]{0,2}/);
+<span id="line492"></span>
+<span id="line493"></span>            if (!!num) {
+<span id="line494"></span>                AddNumber(parseInt(num));
+<span id="line495"></span>            }
+<span id="line496"></span>        }
+<span id="line497"></span>
+<span id="line498"></span>        function AddRandom() {
+<span id="line499"></span>            AddNumber(Math.floor(Math.random() * (1000)));
+<span id="line500"></span>        }
+<span id="line501"></span>
+<span id="line502"></span>        function AddAllNumber() {
+<span id="line503"></span>            while (true) {
+<span id="line504"></span>                AddOneNumber();
+<span id="line505"></span>                var numbertext = document.getElementById("numbertext").value;
+<span id="line506"></span>                if (!/[1-9][0-9]{0,2}/.test(numbertext)) {
+<span id="line507"></span>                    break;
+<span id="line508"></span>                }
+<span id="line509"></span>            }
+<span id="line510"></span>        }
+<span id="line511"></span>
+<span id="line512"></span>        function AddNumber(number) {
+<span id="line513"></span>            tree.Insert(number);
+<span id="line514"></span>            RenewView(tree);
+<span id="line515"></span>        }
+<span id="line516"></span>
+<span id="line517"></span>        function DeleteNumber() {
+<span id="line518"></span>            var deleteNumberText = document.getElementById("deleteNumberText").value;
+<span id="line519"></span>            if (!deleteNumberText.match(/^[1-9][0-9]{0,2}$/)) {
+<span id="line520"></span>                alert("请正确输入1-999的整数");
+<span id="line521"></span>                return false;
+<span id="line522"></span>            }
+<span id="line523"></span>            var number = parseInt(deleteNumberText);
+<span id="line524"></span>            var isExist = tree.Search(number);
+<span id="line525"></span>            if (!isExist)
+<span id="line526"></span>            {
+<span id="line527"></span>                alert("不存在此节点");
+<span id="line528"></span>                return false;
+<span id="line529"></span>            }
+<span id="line530"></span>            tree.Remove(number);
+<span id="line531"></span>            document.getElementById("deleteNumberText").value = '';
+<span id="line532"></span>            RenewView(tree);
+<span id="line533"></span>        }
+<span id="line534"></span>
+<span id="line535"></span>        function RenewView(_tree) {
+<span id="line536"></span>            var currentView = document.getElementById("currentView");
+<span id="line537"></span>            currentView.innerHTML = '';
+<span id="line538"></span>            CreateTreeView(_tree.RootNode, currentView);
+<span id="line539"></span>        }
+<span id="line540"></span>
+<span id="line541"></span>
+<span id="line542"></span>        function CreateTreeView(rootNode, hostDocument) {
+<span id="line543"></span>            var size = SetCanvasWidthHeight(rootNode);
+<span id="line544"></span>
+<span id="line545"></span>            var canvas = document.createElement("canvas");
+<span id="line546"></span>            canvas.style.backgroundColor = "antiquewhite";
+<span id="line547"></span>            canvas.style.display = "block";
+<span id="line548"></span>            canvas.height = size.height;
+<span id="line549"></span>            canvas.width = size.width;
+<span id="line550"></span>
+<span id="line551"></span>            var context = canvas.getContext("2d");
+<span id="line552"></span>
+<span id="line553"></span>            hostDocument.appendChild(canvas);
+<span id="line554"></span>            SetPoint(rootNode);
+<span id="line555"></span>            PreOrder(rootNode, SetPreOrder, context, canvas.width);
+<span id="line556"></span>        }
+<span id="line557"></span>
+<span id="line558"></span>
+<span id="line559"></span>        function PreOrder(node, action, context, canvasWidth) {
+<span id="line560"></span>            action(node, context, canvasWidth);
+<span id="line561"></span>
+<span id="line562"></span>            if (node.LeftNode != null) {
+<span id="line563"></span>                PreOrder(node.LeftNode, action, context, canvasWidth);
+<span id="line564"></span>            }
+<span id="line565"></span>
+<span id="line566"></span>            if (node.RightNode != null) {
+<span id="line567"></span>                PreOrder(node.RightNode, action, context, canvasWidth);
+<span id="line568"></span>            }
+<span id="line569"></span>        }
+<span id="line570"></span>
+<span id="line571"></span>
+<span id="line572"></span>        function SetCanvasWidthHeight(rootNode) {
+<span id="line573"></span>            var level = Level(rootNode);
+<span id="line574"></span>            return {
+<span id="line575"></span>                height: height * level + tops + foot,
+<span id="line576"></span>                width: Math.pow(2, level + 1) * width + spacing * 2
+<span id="line577"></span>            };
+<span id="line578"></span>        }
+<span id="line579"></span>
+<span id="line580"></span>        function SetPreOrder(node, context, canvasWidth) {
+<span id="line581"></span>            var container = drawArc(
+<span id="line582"></span>                context,
+<span id="line583"></span>                node.Data,
+<span id="line584"></span>                canvasWidth / 2 + width * node.nodePoint,
+<span id="line585"></span>                (node.nodeLevel * height + parseInt(tops)),
+<span id="line586"></span>                node.Color);
+<span id="line587"></span>
+<span id="line588"></span>            if (node.Parent != null) {
+<span id="line589"></span>                var line = linkNode(
+<span id="line590"></span>                    context,
+<span id="line591"></span>                    (canvasWidth / 2 + width * node.Parent.nodePoint),
+<span id="line592"></span>                    (node.Parent.nodeLevel * height + parseInt(tops)),
+<span id="line593"></span>                    (node.Data, canvasWidth / 2 + width * node.nodePoint),
+<span id="line594"></span>                    (node.nodeLevel * height + parseInt(tops)));
+<span id="line595"></span>            }
+<span id="line596"></span>        }
+<span id="line597"></span>
+<span id="line598"></span>        //生产节点
+<span id="line599"></span>        function drawArc(context, number, x, y, color) {
+<span id="line600"></span>            //圆
+<span id="line601"></span>            context.beginPath();
+<span id="line602"></span>            context.fillStyle = color;
+<span id="line603"></span>            context.arc(x, y, 15, (Math.PI / 180) * 0, (Math.PI / 180) * 360, false);
+<span id="line604"></span>            context.fill();
+<span id="line605"></span>            context.closePath();
+<span id="line606"></span>
+<span id="line607"></span>            //数字
+<span id="line608"></span>            var textX = x;
+<span id="line609"></span>            var textY = y + 5;
+<span id="line610"></span>            if (number </span><span>&lt; </span><span>10) {
+<span id="line611"></span>                textX -= 5;
+<span id="line612"></span>            } else if (number &gt; 9 &amp;&amp; number </span><span>&lt; </span><span>100) {
+<span id="line613"></span>                textX -= 8;
+<span id="line614"></span>            } else {
+<span id="line615"></span>                textX -= 12;
+<span id="line616"></span>            }
+<span id="line617"></span>
+<span id="line618"></span>            context.fillStyle = "white";
+<span id="line619"></span>            context.font = "bold 15px Arial";
+<span id="line620"></span>            context.fillText(number + "", textX, textY);
+<span id="line621"></span>        }
+<span id="line622"></span>
+<span id="line623"></span>        //链接节点
+<span id="line624"></span>        function linkNode(context, fatherNodeX, fatherNodeY, childrenNodeX, childrenNodeY) {
+<span id="line625"></span>            drawLine(context, fatherNodeX, fatherNodeY + 15, childrenNodeX, childrenNodeY - 15);
+<span id="line626"></span>        }
+<span id="line627"></span>
+<span id="line628"></span>        //生产线
+<span id="line629"></span>        function drawLine(context, x, y, toX, toY) {
+<span id="line630"></span>            context.moveTo(x, y);
+<span id="line631"></span>            context.lineTo(x, y);
+<span id="line632"></span>            context.lineTo(toX, toY);
+<span id="line633"></span>            context.stroke();
+<span id="line634"></span>        }
+<span id="line635"></span>
+<span id="line636"></span>
+<span id="line637"></span>
+<span id="line638"></span>        var maxLevel;
+<span id="line639"></span>        var level;
+<span id="line640"></span>        function Level(rootNode) {
+<span id="line641"></span>            maxLevel = 0;
+<span id="line642"></span>            level = 0;
+<span id="line643"></span>            return levels(rootNode);
+<span id="line644"></span>        }
+<span id="line645"></span>
+<span id="line646"></span>        function levels(node) {
+<span id="line647"></span>            if (node.LeftNode != null) {
+<span id="line648"></span>                level++;
+<span id="line649"></span>                levels(node.LeftNode);
+<span id="line650"></span>            }
+<span id="line651"></span>            maxLevel = Math.max(maxLevel, level);
+<span id="line652"></span>
+<span id="line653"></span>            if (node.RightNode != null) {
+<span id="line654"></span>                level++;
+<span id="line655"></span>                levels(node.RightNode);
+<span id="line656"></span>            }
+<span id="line657"></span>            level--;
+<span id="line658"></span>            return maxLevel;
+<span id="line659"></span>        }
+<span id="line660"></span>
+<span id="line661"></span>        function SetPoint(rootNode) {
+<span id="line662"></span>            var thisMaxLevel = Level(rootNode);
+<span id="line663"></span>            var childQuanty = Math.pow(2, thisMaxLevel);
+<span id="line664"></span>
+<span id="line665"></span>            rootNode.nodeLevel = 0;
+<span id="line666"></span>            rootNode.nodePoint = 0;
+<span id="line667"></span>
+<span id="line668"></span>            if (rootNode.LeftNode != null) {
+<span id="line669"></span>                setPointsLeft(rootNode.LeftNode, -1 * childQuanty / 2, 0, thisMaxLevel - 1);
+<span id="line670"></span>            }
+<span id="line671"></span>
+<span id="line672"></span>            if (rootNode.RightNode != null) {
+<span id="line673"></span>                setPointsRight(rootNode.RightNode, childQuanty / 2, 0, thisMaxLevel - 1);
+<span id="line674"></span>            }
+<span id="line675"></span>        }
+<span id="line676"></span>
+<span id="line677"></span>        function setPointsLeft(node, point, levels, thisMaxLevel) {
+<span id="line678"></span>            ++levels;
+<span id="line679"></span>            node.nodeLevel = levels;
+<span id="line680"></span>            node.nodePoint = point;
+<span id="line681"></span>
+<span id="line682"></span>            if (node.LeftNode != null) {
+<span id="line683"></span>                setPointsLeft(node.LeftNode, point - Math.pow(2, thisMaxLevel - levels), levels, thisMaxLevel);
+<span id="line684"></span>            }
+<span id="line685"></span>
+<span id="line686"></span>            if (node.RightNode != null) {
+<span id="line687"></span>                setPointsLeft(node.RightNode, point + Math.pow(2, thisMaxLevel - levels), levels, thisMaxLevel);
+<span id="line688"></span>            }
+<span id="line689"></span>        }
+<span id="line690"></span>
+<span id="line691"></span>        function setPointsRight(node, point, levels, thisMaxLevel) {
+<span id="line692"></span>            ++levels;
+<span id="line693"></span>            node.nodeLevel = levels;
+<span id="line694"></span>            node.nodePoint = point;
+<span id="line695"></span>
+<span id="line696"></span>            if (node.LeftNode != null) {
+<span id="line697"></span>                setPointsRight(node.LeftNode, point - Math.pow(2, thisMaxLevel - levels), levels, thisMaxLevel);
+<span id="line698"></span>            }
+<span id="line699"></span>
+<span id="line700"></span>            if (node.RightNode != null) {
+<span id="line701"></span>                setPointsRight(node.RightNode, point + Math.pow(2, thisMaxLevel - levels), levels, thisMaxLevel);
+<span id="line702"></span>            }
+<span id="line703"></span>        }
+<span id="line704"></span>
+<span id="line705"></span>
+<span id="line706"></span>        var stepRemark = {
+<span id="line707"></span>            "insertCase1": {
+<span id="line708"></span>                "title": "插入节点情况1",
+<span id="line709"></span>                "remark": [
+<span id="line710"></span>                    "当前节点的父节点是红色，且当前节点的祖父节点的另一个子节点（叔叔节点）也是红色"
+<span id="line711"></span>                ]
+<span id="line712"></span>            },
+<span id="line713"></span>            "insertSolution1": {
+<span id="line714"></span>                "title": "插入节点情况1的解决方案",
+<span id="line715"></span>                "remark": [
+<span id="line716"></span>                        "(01) 将“父节点”设为黑色",
+<span id="line717"></span>                        "(02) 将“叔叔节点”设为黑色",
+<span id="line718"></span>                        "(03) 将“祖父节点”设为“红色",
+<span id="line719"></span>                        "(04) 将“祖父节点”设为“当前节点”(红色节点)；即，之后继续对“当前节点”进行操作"
+<span id="line720"></span>                ]
+<span id="line721"></span>            },
+<span id="line722"></span>            "insertCase2": {
+<span id="line723"></span>                "title": "插入节点情况2",
+<span id="line724"></span>                "remark": [
+<span id="line725"></span>                    "当前节点的父节点是红色，叔叔节点是黑色，且当前节点是其父节点的右孩子"
+<span id="line726"></span>                ]
+<span id="line727"></span>            },
+<span id="line728"></span>            "insertSolution2": {
+<span id="line729"></span>                "title": "插入节点情况2的解决方案",
+<span id="line730"></span>                "remark": [
+<span id="line731"></span>                        "(01) 将“父节点”作为“新的当前节点”",
+<span id="line732"></span>                        "(02) 以“新的当前节点”为支点进行左旋",
+<span id="line733"></span>                ]
+<span id="line734"></span>            },
+<span id="line735"></span>            "insertCase3": {
+<span id="line736"></span>                "title": "插入节点情况3",
+<span id="line737"></span>                "remark": [
+<span id="line738"></span>                    "当前节点的父节点是红色，叔叔节点是黑色，且当前节点是其父节点的左孩子"
+<span id="line739"></span>                ]
+<span id="line740"></span>            },
+<span id="line741"></span>            "insertSolution3": {
+<span id="line742"></span>                "title": "插入节点情况3的解决方案",
+<span id="line743"></span>                "remark": [
+<span id="line744"></span>                        "(01) 将“父节点”设为“黑色”",
+<span id="line745"></span>                        "(02) 将“祖父节点”设为“红色”",
+<span id="line746"></span>                        "(03) 以“祖父节点”为支点进行右旋"
+<span id="line747"></span>                ]
+<span id="line748"></span>            },
+<span id="line749"></span>            "insertCase4": {
+<span id="line750"></span>                "title": "插入节点情况4",
+<span id="line751"></span>                "remark": [
+<span id="line752"></span>                    "当前节点的父节点是红色，叔叔节点是黑色，且当前节点是其父节点的左孩子"
+<span id="line753"></span>                ]
+<span id="line754"></span>            },
+<span id="line755"></span>            "insertSolution4": {
+<span id="line756"></span>                "title": "插入节点情况4的解决方案",
+<span id="line757"></span>                "remark": [
+<span id="line758"></span>                        "(01) 将“父节点”作为“新的当前节点”",
+<span id="line759"></span>                        "(02) 以“新的当前节点”为支点进行右旋",
+<span id="line760"></span>                ]
+<span id="line761"></span>            },
+<span id="line762"></span>            "insertCase5": {
+<span id="line763"></span>                "title": "插入节点情况5",
+<span id="line764"></span>                "remark": [
+<span id="line765"></span>                    "当前节点的父节点是红色，叔叔节点是黑色，且当前节点是其父节点的右孩子"
+<span id="line766"></span>                ]
+<span id="line767"></span>            },
+<span id="line768"></span>            "insertSolution5": {
+<span id="line769"></span>                "title": "插入节点情况5的解决方案",
+<span id="line770"></span>                "remark": [
+<span id="line771"></span>                        "(01) 将“父节点”设为“黑色”",
+<span id="line772"></span>                        "(02) 将“祖父节点”设为“红色”",
+<span id="line773"></span>                        "(03) 以“祖父节点”为支点进行左旋"
+<span id="line774"></span>                ]
+<span id="line775"></span>            },
+<span id="line776"></span>            "deleteCase1": {
+<span id="line777"></span>                "title": "删除节点情况1",
+<span id="line778"></span>                "remark": [
+<span id="line779"></span>                    "被删节点是“黑+黑”节点，被删除的节点是左节点，被删节点的兄弟节点是红色。(此时被删节点的父节点和x的兄弟节点的子节点都是黑节点)。"
+<span id="line780"></span>                ]
+<span id="line781"></span>            },
+<span id="line782"></span>            "deleteSolution1": {
+<span id="line783"></span>                "title": "删除节点情况1解决方案",
+<span id="line784"></span>                "remark": [
+<span id="line785"></span>                    "(01) 将x的兄弟节点设为“黑色”。",
+<span id="line786"></span>                    "(02) 将x的父节点设为“红色”。",
+<span id="line787"></span>                    "(03) 对x的父节点进行左旋。",
+<span id="line788"></span>                    "(04) 左旋后，重新设置x的兄弟节点。"
+<span id="line789"></span>                ]
+<span id="line790"></span>            },
+<span id="line791"></span>            "deleteCase2": {
+<span id="line792"></span>                "title": "删除节点情况2",
+<span id="line793"></span>                "remark": [
+<span id="line794"></span>                    "被删节点是“黑+黑”节点，被删除的节点是右节点，被删节点的兄弟节点是红色。(此时被删节点的父节点和x的兄弟节点的子节点都是黑节点)。"
+<span id="line795"></span>                ]
+<span id="line796"></span>            },
+<span id="line797"></span>            "deleteSolution2": {
+<span id="line798"></span>                "title": "删除节点情况2解决方案",
+<span id="line799"></span>                "remark": [
+<span id="line800"></span>                    "(01) 将被删节点的兄弟节点设为“黑色”。",
+<span id="line801"></span>                    "(02) 将被删节点的父节点设为“红色”。",
+<span id="line802"></span>                    "(03) 对被删节点的父节点进行右旋。",
+<span id="line803"></span>                    "(04) 右旋后，重新设置x的兄弟节点。"
+<span id="line804"></span>                ]
+<span id="line805"></span>            },
+<span id="line806"></span>            "deleteCase3": {
+<span id="line807"></span>                "title": "删除节点情况3",
+<span id="line808"></span>                "remark": [
+<span id="line809"></span>                    "被删节点是“黑+黑”节点，被删节点的兄弟节点是黑色，被删节点的兄弟节点的两个孩子都是黑色。"
+<span id="line810"></span>                ]
+<span id="line811"></span>            },
+<span id="line812"></span>            "deleteSolution3": {
+<span id="line813"></span>                "title": "删除节点情况3解决方案",
+<span id="line814"></span>                "remark": [
+<span id="line815"></span>                    "(01) 将被删节点的兄弟节点设为“红色”。",
+<span id="line816"></span>                    "(02) 设置“被删节点的父节点”为“新的被删节点节点”。"
+<span id="line817"></span>                ]
+<span id="line818"></span>            },
+<span id="line819"></span>            "deleteCase4": {
+<span id="line820"></span>                "title": "删除节点情况4",
+<span id="line821"></span>                "remark": [
+<span id="line822"></span>                    "将被删节点是“黑+黑”节点，被删节点的兄弟节点是黑色；将被删节点的兄弟节点的左孩子是红色，右孩子是黑色的。"
+<span id="line823"></span>                ]
+<span id="line824"></span>            },
+<span id="line825"></span>            "deleteSolution4": {
+<span id="line826"></span>                "title": "删除节点情况4解决方案",
+<span id="line827"></span>                "remark": [
+<span id="line828"></span>                    "(01) 将被删节点兄弟节点的左孩子设为“黑色”。",
+<span id="line829"></span>                    "(02) 将被删节点兄弟节点设为“红色”。",
+<span id="line830"></span>                    "(03) 对被删节点的兄弟节点进行右旋。",
+<span id="line831"></span>                    "(04) 右旋后，重新设置被删节点的兄弟节点。",
+<span id="line832"></span>                ]
+<span id="line833"></span>            },
+<span id="line834"></span>            "deleteCase5": {
+<span id="line835"></span>                "title": "删除节点情况5",
+<span id="line836"></span>                "remark": [
+<span id="line837"></span>                    "被删节点是“黑+黑”节点，被删节点的兄弟节点是黑色；被删节点的兄弟节点的左孩子是黑色，右孩子是红色的。"
+<span id="line838"></span>                ]
+<span id="line839"></span>            },
+<span id="line840"></span>            "deleteSolution5": {
+<span id="line841"></span>                "title": "删除节点情况5解决方案",
+<span id="line842"></span>                "remark": [
+<span id="line843"></span>                    "(01) 将被删节点兄弟节点的右孩子设为“黑色”。",
+<span id="line844"></span>                    "(02) 将被删节点兄弟节点设为“红色”。",
+<span id="line845"></span>                    "(03) 对被删节点的兄弟节点进行左旋。",
+<span id="line846"></span>                    "(04) 左旋后，重新设置被删节点的兄弟节点。",
+<span id="line847"></span>                ]
+<span id="line848"></span>            },
+<span id="line849"></span>            "deleteCase6": {
+<span id="line850"></span>                "title": "删除节点情况6",
+<span id="line851"></span>                "remark": [
+<span id="line852"></span>                    "被删节点是“黑+黑”节点，被删节点的兄弟节点是黑色；被删节点的兄弟节点的右孩子是红色的，被删节点的兄弟节点的左孩子任意颜色。"
+<span id="line853"></span>                ]
+<span id="line854"></span>            },
+<span id="line855"></span>            "deleteSolution6": {
+<span id="line856"></span>                "title": "删除节点情况6解决方案",
+<span id="line857"></span>                "remark": [
+<span id="line858"></span>                    "(01) 将被删节点父节点颜色 赋值给 被删节点的兄弟节点。",
+<span id="line859"></span>                    "(02) 将被删节点父节点设为“黑色”。",
+<span id="line860"></span>                    "(03) 将被删节点兄弟节点的右子节点设为“黑色”。",
+<span id="line861"></span>                    "(04) 对被删节点的父节点进行左旋。",
+<span id="line862"></span>                    "(05) 设置“被删节点”为“根节点”。"
+<span id="line863"></span>                ]
+<span id="line864"></span>            },
+<span id="line865"></span>            "deleteCase7": {
+<span id="line866"></span>                "title": "删除节点情况7",
+<span id="line867"></span>                "remark": [
+<span id="line868"></span>                    "被删节点是“黑+黑”节点，被删节点的兄弟节点是黑色；被删节点的兄弟节点的左孩子是红色的，被删节点的兄弟节点的右孩子任意颜色。"
+<span id="line869"></span>                ]
+<span id="line870"></span>            },
+<span id="line871"></span>            "deleteSolution7": {
+<span id="line872"></span>                "title": "删除节点情况7解决方案",
+<span id="line873"></span>                "remark": [
+<span id="line874"></span>                    "(01) 将被删节点父节点颜色 赋值给 被删节点的兄弟节点。",
+<span id="line875"></span>                    "(02) 将被删节点父节点设为“黑色”。",
+<span id="line876"></span>                    "(03) 将被删节点兄弟节点的左子节设为“黑色”。",
+<span id="line877"></span>                    "(04) 对被删节点的父节点进行右旋。",
+<span id="line878"></span>                    "(05) 设置“被删节点”为“根节点”。"
+<span id="line879"></span>                ]
+<span id="line880"></span>            },
+<span id="line881"></span>            "deleteCase8": {
+<span id="line882"></span>                "title": "删除节点情况8",
+<span id="line883"></span>                "remark": [
+<span id="line884"></span>                    "被删节点有两个子节点"
+<span id="line885"></span>                ]
+<span id="line886"></span>            },
+<span id="line887"></span>            "deleteSolution8": {
+<span id="line888"></span>                "title": "删除节点情况8解决方案",
+<span id="line889"></span>                "remark": [
+<span id="line890"></span>                    "(01) 将被删节点右节点的子孙节点中找出小的节点，替换被删节点。",
+<span id="line891"></span>                ]
+<span id="line892"></span>            },
+<span id="line893"></span>            "deleteCase9": {
+<span id="line894"></span>                "title": "删除节点情况9",
+<span id="line895"></span>                "remark": [
+<span id="line896"></span>                    "被删节点只有一个子节点或无子节点"
+<span id="line897"></span>                ]
+<span id="line898"></span>            },
+<span id="line899"></span>            "deleteSolution9": {
+<span id="line900"></span>                "title": "删除节点情况9解决方案",
+<span id="line901"></span>                "remark": [
+<span id="line902"></span>                    "(01) 将唯一的子节点替换被删节点。",
+<span id="line903"></span>                ]
+<span id="line904"></span>            }
+<span id="line905"></span>                
+<span id="line906"></span>        };
+<span id="line907"></span>
+<span id="line908"></span>        function ClearStepView() {
+<span id="line909"></span>            var stepView = document.getElementById("stepView");
+<span id="line910"></span>            stepView.innerHTML = '';
+<span id="line911"></span>        }
+<span id="line912"></span>
+<span id="line913"></span>        function CreateStepView(_tree, step, currentNumber) {
+<span id="line914"></span>            var fieldset = document.createElement("fieldset");
+<span id="line915"></span>            var legend = document.createElement("legend");
+<span id="line916"></span>            var ul = document.createElement("ul");
+<span id="line917"></span>            var canvas = document.createElement("canvas");
+<span id="line918"></span>
+<span id="line919"></span>            legend.innerHTML = stepRemark[step].title;
+<span id="line920"></span>
+<span id="line921"></span>            if (!!currentNumber) {
+<span id="line922"></span>                var li = document.createElement("li");
+<span id="line923"></span>                li.innerHTML = "当前节点：" + currentNumber;
+<span id="line924"></span>                ul.appendChild(li);
+<span id="line925"></span>            }
+<span id="line926"></span>
+<span id="line927"></span>
+<span id="line928"></span>            for (var i = 0; i </span><span>&lt; </span><span>stepRemark[step].remark.length; i++) {
+<span id="line929"></span>                var li = document.createElement("li");
+<span id="line930"></span>                li.innerHTML = stepRemark[step].remark[i];
+<span id="line931"></span>                ul.appendChild(li);
+<span id="line932"></span>            }
+<span id="line933"></span>
+<span id="line934"></span>            fieldset.appendChild(legend);
+<span id="line935"></span>            fieldset.appendChild(ul);
+<span id="line936"></span>            fieldset.appendChild(canvas);
+<span id="line937"></span>
+<span id="line938"></span>            var stepView = document.getElementById("stepView");
+<span id="line939"></span>            stepView.appendChild(fieldset);
+<span id="line940"></span>
+<span id="line941"></span>            CreateStepTreeView(_tree, canvas);
+<span id="line942"></span>        }
+<span id="line943"></span>
+<span id="line944"></span>        function CreateStepTreeView(rootNode, canvas) {
+<span id="line945"></span>            var size = SetCanvasWidthHeight(rootNode);
+<span id="line946"></span>
+<span id="line947"></span>            canvas.style.backgroundColor = "antiquewhite";
+<span id="line948"></span>            canvas.style.display = "block";
+<span id="line949"></span>            canvas.height = size.height;
+<span id="line950"></span>            canvas.width = size.width;
+<span id="line951"></span>
+<span id="line952"></span>            var context = canvas.getContext("2d");
+<span id="line953"></span>
+<span id="line954"></span>            SetPoint(rootNode);
+<span id="line955"></span>            PreOrder(rootNode, SetPreOrder, context, canvas.width);
+<span id="line956"></span>        }
+<span id="line957"></span>    </span><span>&lt;/<span class="end-tag">script</span>&gt;</span><span>
+<span id="line958"></span></span><span>&lt;/<span class="end-tag">body</span>&gt;</span><span>
+<span id="line959"></span></span><span>&lt;/<span class="end-tag">html</span>&gt;</span><span>
+<span id="line960"></span>
+<span id="line961"></span>    	</span><span class="error" title="多余的起始标签“style”。">&lt;<span class="start-tag">style</span>&gt;</span><span></span><span>&lt;/<span class="end-tag">style</span>&gt;</span><span>
+<span id="line962"></span>	    		</span><span>&lt;<span class="start-tag">script</span>&gt;</span><span></span><span>&lt;/<span class="end-tag">script</span>&gt;</span><span>
+<span id="line963"></span>	
+<span id="line964"></span></span><span class="comment">&lt;!-- Generated by RunJS (Thu Nov 08 09:37:41 CST 2018) 1ms --&gt;</span><span></span></pre><menu type="context" id="actions"><menuitem id="goToLine" label="转到指定行…" accesskey="L"></menuitem><menuitem id="wrapLongLines" label="长行自动换行" type="checkbox"></menuitem><menuitem id="highlightSyntax" label="语法高亮" type="checkbox" checked="true"></menuitem></menu></body></html>
