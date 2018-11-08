@@ -40,18 +40,20 @@ var a = ['a'];
 var b = ['b'];
 console.log(a.concat(b));
 
-function* idMaker(){
+function* idMaker(functionParam){
+	console.log(functionParam);
 	let index = 0;
 	while(index < 3){
-		yield index++;
+		var generatorParam = yield index++;
+		console.log(generatorParam + '*');
 	}
 }
 
-var gen = idMaker();
+var gen = idMaker('param');
 var item = gen.next();
 while(!item.done){
 	console.log(item.value);
-	item = gen.next(5);
+	item = gen.next(5);	
 }
 
 var ar = ['a','b'];
