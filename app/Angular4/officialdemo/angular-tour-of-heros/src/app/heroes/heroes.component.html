@@ -1,7 +1,7 @@
 
   <h2>My Heros</h2>
   <ul class="heros">
-    <li *ngFor="let hero of heros"><span class="badge">{{hero.id}}</span>{{hero.name}}</li>
+    <li *ngFor="let hero of heros" (click) = "onClick(hero)"><span class="badge">{{selectedHero.id}}</span>{{selectedHero.name}}</li>
   </ul>
 
 
